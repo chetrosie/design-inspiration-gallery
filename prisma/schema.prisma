@@ -16,11 +16,12 @@ model User {
   email         String?    @unique
   emailVerified DateTime?
   image         String?
+  password      String?
   accounts      Account[]
   sessions      Session[]
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
-  role          Role       @default(USER)
+  role          String     @default("USER")
   inspirations  Inspiration[]
 }
 
@@ -60,11 +61,6 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
-}
-
-enum Role {
-  USER
-  ADMIN
 }
 
 model Category {

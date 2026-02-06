@@ -45,11 +45,12 @@ export const authOptions: NextAuthOptions = {
           name: user.name,
           role: user.role,
         };
+        return null;
       },
     }),
   ],
   callbacks: {
-    async session({ session, user }) {
+    async session({ session, user }: { session: any; user: any }) {
       if (session.user) {
         session.user.id = user.id;
         session.user.role = user.role;

@@ -2,6 +2,10 @@ import Header from '@/components/Header';
 import InspirationGrid from '@/components/InspirationGrid';
 import { prisma } from '@/lib/db';
 import { Category, Tag, Inspiration } from '@prisma/client';
+import Link from 'next/link';
+import { FiPlus } from 'react-icons/fi';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 
 type InspirationWithRelations = Inspiration & {
   category: Category | null;
@@ -9,6 +13,8 @@ type InspirationWithRelations = Inspiration & {
 };
 
 export default async function Home() {
+  const session = await getServerSession(authOptions);
+  
   // 获取公开的灵感内容，按创建时间倒序排列
   const inspirations = await prisma.inspiration.findMany({
     where: {
@@ -46,6 +52,18 @@ export default async function Home() {
               <p className="mt-6 max-w-lg mx-auto text-xl text-primary-100">
                 收集、分享和发现优秀的设计灵感
               </p>
+              
+              {session && (
+                <div className="mt-8">
+                  <Link
+                    href="/dashboard/inspirations/new"
+                    className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-primary-600 bg-white hover:bg-primary-50 transition-colors"
+                  >
+                    <FiPlus className="mr-2" />
+                    添加灵感
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -63,8 +81,9 @@ export default async function Home() {
             <div className="mt-10">
               <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
                 {categories.map((category) => (
-                  <div 
+                  <Link 
                     key={category.id}
+                    href={`/category/${category.slug}`}
                     className="group relative rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm hover:shadow-md transition-shadow duration-200"
                   >
                     <div className="flex items-center">
@@ -79,7 +98,7 @@ export default async function Home() {
                         <p className="text-sm font-medium text-gray-900 truncate">{category.name}</p>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>
