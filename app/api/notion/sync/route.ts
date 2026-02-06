@@ -1,8 +1,8 @@
-import { syncNotionDatabaseToLocal } from '@/lib/notion';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
+import { syncNotionData } from '@/lib/notion-sync';
 
-// POST /api/notion/sync - 同步Notion数据库到本地
+// POST /api/notion/sync - 手动触发Notion同步
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
   
@@ -15,7 +15,7 @@ export async function POST(request: Request) {
   }
 
   // 检查用户是否有权限同步（仅管理员）
-  if (session.user.role !== 'ADMIN') {
+  if (!session.user || session.user.role !== 'ADMIN') {
     return Response.json(
       { success: false, error: '无权限同步Notion数据库' },
       { status: 403 }
@@ -23,28 +23,20 @@ export async function POST(request: Request) {
   }
 
   try {
-    const body = await request.json();
-    const databaseId = body.databaseId || process.env.NOTION_DATABASE_ID;
-    
-    if (!databaseId) {
-      return Response.json(
-        { success: false, error: '未提供Notion数据库ID' },
-        { status: 400 }
-      );
-    }
-
-    // 同步Notion数据库到本地
-    const inspirations = await syncNotionDatabaseToLocal(databaseId);
+    // 执行同步
+    const result = await syncNotionData();
     
     return Response.json({
-      success: true,
-      data: inspirations,
-      message: `成功同步 ${inspirations.length} 个灵感`,
+      success: result.success,
+      message: result.success 
+        ? `同步成功，共处理 ${result.count} 条记录` 
+        : `同步失败: ${result.error}`,
+      data: result,
     });
-  } catch (error: any) {
-    console.error('同步Notion数据库失败:', error);
+  } catch (error) {
+    console.error('同步失败:', error);
     return Response.json(
-      { success: false, error: error.message || '同步Notion数据库失败' },
+      { success: false, error: '同步过程中发生错误' },
       { status: 500 }
     );
   }
