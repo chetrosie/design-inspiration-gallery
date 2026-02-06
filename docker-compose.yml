@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: inspirehub
+      POSTGRES_PASSWORD: inspirehub
+      POSTGRES_DB: inspirehub
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://inspirehub:inspirehub@db:5432/inspirehub
+      - NEXTAUTH_SECRET=your_nextauth_secret_here
+      - NEXTAUTH_URL=http://localhost:3000
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+
+volumes:
+  postgres_data:
