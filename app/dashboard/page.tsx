@@ -21,15 +21,15 @@ export default async function DashboardPage() {
       id: session.user.id,
     },
     select: {
-      inspirations: {
+      _count: {
         select: {
-          _count: true,
+          inspirations: true,
         },
       },
     },
   });
 
-  const totalInspirations = userStats?.inspirations._count || 0;
+  const totalInspirations = userStats?._count?.inspirations || 0;
 
   // 获取最近添加的灵感
   const recentInspirations = await prisma.inspiration.findMany({
