@@ -65,7 +65,7 @@ export async function PUT(
   }
 
   // 检查用户是否有权限更新标签（仅管理员）
-  if (session.user.role !== 'ADMIN') {
+  if (!session.user || session.user.role !== 'ADMIN') {
     return Response.json(
       { success: false, error: '无权限更新标签' },
       { status: 403 }
@@ -115,7 +115,7 @@ export async function DELETE(
   }
 
   // 检查用户是否有权限删除标签（仅管理员）
-  if (session.user.role !== 'ADMIN') {
+  if (!session.user || session.user.role !== 'ADMIN') {
     return Response.json(
       { success: false, error: '无权限删除标签' },
       { status: 403 }

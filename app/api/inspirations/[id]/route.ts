@@ -93,7 +93,8 @@ export async function PUT(
       );
     }
 
-    if (existingInspiration.userId !== session.user.id && session.user.role !== 'ADMIN') {
+    if ((!session.user || existingInspiration.userId !== session.user.id) && 
+        (!session.user || session.user.role !== 'ADMIN')) {
       return Response.json(
         { success: false, error: '无权限修改此灵感' },
         { status: 403 }
@@ -167,7 +168,8 @@ export async function DELETE(
       );
     }
 
-    if (existingInspiration.userId !== session.user.id && session.user.role !== 'ADMIN') {
+    if ((!session.user || existingInspiration.userId !== session.user.id) && 
+        (!session.user || session.user.role !== 'ADMIN')) {
       return Response.json(
         { success: false, error: '无权限删除此灵感' },
         { status: 403 }

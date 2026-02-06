@@ -15,7 +15,7 @@ export async function POST(request: Request) {
   }
 
   // 检查用户是否有权限同步（仅管理员）
-  if (session.user.role !== 'ADMIN') {
+  if (!session.user || session.user.role !== 'ADMIN') {
     return Response.json(
       { success: false, error: '无权限执行同步操作' },
       { status: 403 }

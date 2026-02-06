@@ -111,7 +111,7 @@ export async function POST(request: Request) {
         author: body.author,
         prompt: body.prompt,
         categoryId: body.categoryId,
-        userId: session.user.id,
+        userId: session.user?.id,
         isPublic: body.isPublic ?? true,
         tags: {
           connect: body.tagIds?.map((id: string) => ({ id })) || [],

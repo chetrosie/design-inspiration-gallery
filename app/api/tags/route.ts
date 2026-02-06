@@ -58,7 +58,7 @@ export async function POST(request: Request) {
   }
 
   // 检查用户是否有权限创建标签（仅管理员）
-  if (session.user.role !== 'ADMIN') {
+  if (!session.user || session.user.role !== 'ADMIN') {
     return Response.json(
       { success: false, error: '无权限创建标签' },
       { status: 403 }
