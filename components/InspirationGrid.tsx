@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FiHeart, FiEye, FiTag } from 'react-icons/fi';
@@ -20,9 +19,8 @@ export default function InspirationGrid({ inspirations }: InspirationGridProps) 
   return (
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {inspirations.map((inspiration) => (
-        <motion.div
+        <div
           key={inspiration.id}
-          whileHover={{ y: -5 }}
           className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300"
         >
           <Link href={`/inspiration/${inspiration.id}`}>
@@ -94,7 +92,7 @@ export default function InspirationGrid({ inspirations }: InspirationGridProps) 
               </div>
             )}
           </div>
-        </motion.div>
+        </div>
       ))}
     </div>
   );

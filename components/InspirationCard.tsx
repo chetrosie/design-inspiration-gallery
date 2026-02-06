@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FiHeart, FiEye, FiTag, FiExternalLink } from 'react-icons/fi';
@@ -18,11 +17,7 @@ interface InspirationCardProps {
 
 export default function InspirationCard({ inspiration }: InspirationCardProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300"
-    >
+    <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300">
       <div className="relative">
         <Link href={`/inspiration/${inspiration.id}`}>
           <div className="relative h-64 w-full">
@@ -108,6 +103,6 @@ export default function InspirationCard({ inspiration }: InspirationCardProps) {
           </div>
         )}
       </div>
-    </motion.div>
+    </div>
   );
 }
