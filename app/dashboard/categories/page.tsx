@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Header from '@/components/Header';
-import { FiPlus, FiEdit, FiTrash2, FiArrowLeft } from 'react-icons/fi';
+import { FiPlus, FiEdit, FiTrash2, FiArrowLeft, FiFolder } from 'react-icons/fi';
 
 interface Category {
   id: string;
