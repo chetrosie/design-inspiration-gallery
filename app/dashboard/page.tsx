@@ -11,7 +11,7 @@ export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
 
   // 如果没有登录，重定向到登录页面
-  if (!session) {
+  if (!session || !session.user) {
     redirect('/api/auth/signin');
   }
 
