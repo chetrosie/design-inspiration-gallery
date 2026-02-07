@@ -18,21 +18,38 @@ This repository now supports **two deployment modes**:
 
 ## Mode B — Cloudflare Full Native (D1 + R2)
 
-A separate scaffold is provided under `cloudflare-full/`:
+A separate runnable variant is provided under `cloudflare-full/`:
 
-- `cloudflare-full/src/index.js`: Worker entry
+- `cloudflare-full/src/index.js`: Worker entry + APIs
+- `cloudflare-full/public/`: Lightweight UI page
 - `cloudflare-full/wrangler.toml`: D1/R2 binding config
 - `cloudflare-full/schema.sql`: D1 schema
+
+### Included APIs in Mode B
+- `GET /api/health`
+- `GET /api/inspirations`
+- `POST /api/inspirations`
+- `POST /api/upload` (upload image to R2)
+- `GET /media/:key` (read image from R2)
 
 ### Deploy Mode B
 ```bash
 cd cloudflare-full
 npm install
-# create D1 and run migration
+
+# Login
+wrangler login
+
+# Create D1 and R2
 wrangler d1 create design_inspiration
+wrangler r2 bucket create design-inspiration-assets
+
+# Run SQL schema
 wrangler d1 execute design_inspiration --file=schema.sql
-# update wrangler.toml database_id
+
+# Update wrangler.toml database_id
+# Deploy
 wrangler deploy
 ```
 
-Use this mode when you want full Cloudflare-native architecture.
+After deploy, open your worker URL and you will get a simple management UI.

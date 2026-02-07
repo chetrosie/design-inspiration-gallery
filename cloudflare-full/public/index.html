@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inspiration Cloudflare Full</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="header">
+        <h1>Inspiration · Cloudflare Full</h1>
+        <p>D1 + R2 + Worker</p>
+      </header>
+
+      <section class="card">
+        <h2>上传图片到 R2</h2>
+        <form id="uploadForm" class="form-row">
+          <input type="file" name="file" accept="image/*" required />
+          <button type="submit">上传</button>
+        </form>
+        <p id="uploadResult" class="hint"></p>
+      </section>
+
+      <section class="card">
+        <h2>新增灵感记录（D1）</h2>
+        <form id="createForm" class="form-grid">
+          <input name="title" placeholder="标题" required />
+          <input name="author" placeholder="作者" />
+          <input name="category" placeholder="分类" />
+          <input name="image_url" placeholder="图片 URL（可填上传结果）" />
+          <textarea name="prompt" placeholder="Prompt"></textarea>
+          <button type="submit">保存</button>
+        </form>
+      </section>
+
+      <section class="card">
+        <div class="row-between">
+          <h2>灵感列表</h2>
+          <button id="refreshBtn">刷新</button>
+        </div>
+        <div id="list" class="list"></div>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

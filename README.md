@@ -58,7 +58,14 @@ wrangler d1 execute design_inspiration --file=schema.sql
 wrangler deploy
 ```
 
-详细说明见：`docs/deployment-modes.md`
+
+### Cloudflare Full 模式能力（新增）
+在 `cloudflare-full/` 目录里，已提供可运行的 Worker + D1 + R2 版本，包含：
+- 上传图片到 R2：`POST /api/upload`
+- 读取图片：`GET /media/:key`
+- 灵感列表/新增：`GET/POST /api/inspirations`
+- 简易可视化管理页：`cloudflare-full/public/index.html`
+
 
 ## 快速开始
 
