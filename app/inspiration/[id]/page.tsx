@@ -1,6 +1,8 @@
 import { prisma } from '@/lib/db';
 import Header from '@/components/Header';
 import InspirationCard from '@/components/InspirationCard';
+import ImageWithFallback from '@/components/ImageWithFallback';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 export default async function InspirationDetailPage({ params }: { params: { id: string } }) {
@@ -62,11 +64,13 @@ export default async function InspirationDetailPage({ params }: { params: { id: 
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                 {relatedInspirations.map((relatedInspiration) => (
                   <div key={relatedInspiration.id} className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
-                    <a href={`/inspiration/${relatedInspiration.id}`} className="block">
+                    <Link href={`/inspiration/${relatedInspiration.id}`} className="block">
                       <div className="relative h-48">
-                        <img
+                        <ImageWithFallback
                           src={relatedInspiration.imageUrl}
                           alt={relatedInspiration.title}
+                          width={600}
+                          height={192}
                           className="w-full h-full object-cover"
                         />
                       </div>
@@ -78,7 +82,7 @@ export default async function InspirationDetailPage({ params }: { params: { id: 
                           </span>
                         )}
                       </div>
-                    </a>
+                    </Link>
                   </div>
                 ))}
               </div>

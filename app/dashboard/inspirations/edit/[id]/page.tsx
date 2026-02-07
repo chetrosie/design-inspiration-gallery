@@ -37,13 +37,6 @@ export default function EditInspirationPage() {
     isPublic: true,
   });
 
-  // 获取灵感详情
-  useEffect(() => {
-    if (params.id) {
-      fetchInspiration();
-    }
-  }, [params.id, fetchInspiration]);
-
   const fetchInspiration = useCallback(async () => {
     try {
       const res = await fetch(`/api/inspirations/${params.id}`);
@@ -69,6 +62,14 @@ export default function EditInspirationPage() {
       setIsLoading(false);
     }
   }, [params.id]);
+
+  // 获取灵感详情
+  useEffect(() => {
+    if (params.id) {
+      fetchInspiration();
+    }
+  }, [params.id, fetchInspiration]);
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
