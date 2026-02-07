@@ -25,9 +25,40 @@
 - **部署**: Vercel, Cloudflare Pages, Docker
 - **其他**: Notion API, React Icons
 
-## 在线演示
 
-[在线演示地址](https://design-inspiration-gallery.vercel.app) (部署后更新)
+## 部署模式选择（新增）
+
+本仓库现在支持 **两套可选部署模式**：
+
+### 模式 A（推荐先上线）：PostgreSQL + Prisma
+- 代码位置：仓库根目录（当前主应用）
+- 技术栈：Next.js + Prisma + PostgreSQL
+- 适合：快速稳定上线，保留现有功能
+
+Cloudflare Pages 配置：
+- Build Command: `npm run build`
+- Build Output Directory: `.vercel/output/static`
+- 必填环境变量：
+  - `DATABASE_URL`
+  - `NEXTAUTH_SECRET`
+  - `NEXTAUTH_URL`
+
+### 模式 B（全 Cloudflare 原生）：D1 + R2 + Workers
+- 代码位置：`cloudflare-full/`
+- 技术栈：Cloudflare Worker + D1 + R2
+- 适合：全 Cloudflare 架构、后续深度原生优化
+
+快速部署：
+```bash
+cd cloudflare-full
+npm install
+wrangler d1 create design_inspiration
+wrangler d1 execute design_inspiration --file=schema.sql
+# 填写 wrangler.toml 中的 database_id
+wrangler deploy
+```
+
+详细说明见：`docs/deployment-modes.md`
 
 ## 快速开始
 

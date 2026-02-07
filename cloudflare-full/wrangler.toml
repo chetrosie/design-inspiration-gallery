@@ -1,0 +1,16 @@
+name = "design-inspiration-gallery-cf"
+main = "src/index.js"
+compatibility_date = "2026-02-08"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "design_inspiration"
+database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+
+[[r2_buckets]]
+binding = "ASSETS_BUCKET"
+bucket_name = "design-inspiration-assets"
