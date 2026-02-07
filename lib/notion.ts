@@ -28,25 +28,27 @@ export async function getDatabaseItems(databaseId: string) {
 
 // 将Notion页面转换为灵感对象
 export function convertNotionPageToInspiration(page: PageObjectResponse) {
-  const properties = page.properties;
-  
+  const properties = page.properties as Record<string, any>;
+
   // 提取标题
   const titleProperty = properties.Title || properties.Name;
-  const title = titleProperty?.type === 'title' 
-    ? titleProperty.title.map(t => t.plain_text).join('')
+  const title = titleProperty?.type === 'title'
+    ? titleProperty.title.map((t: any) => t.plain_text).join('')
     : '';
 
   // 提取描述
   const descriptionProperty = properties.Description;
   const description = descriptionProperty?.type === 'rich_text'
-    ? descriptionProperty.rich_text.map(t => t.plain_text).join('')
+    ? descriptionProperty.rich_text.map((t: any) => t.plain_text).join('')
     : '';
 
   // 提取图片URL
   const imageProperty = properties.Image || properties.Cover;
-  const imageUrl = imageProperty?.type === 'files'
-    ? imageProperty.files[0]?.file?.url || imageProperty.files[0]?.external?.url
-    : '';
+  let imageUrl = '';
+  if (imageProperty?.type === 'files' && Array.isArray(imageProperty.files) && imageProperty.files.length > 0) {
+    const firstFile = imageProperty.files[0] as any;
+    imageUrl = firstFile?.file?.url || firstFile?.external?.url || '';
+  }
 
   // 提取链接
   const linkProperty = properties.Link || properties.URL;
@@ -55,25 +57,25 @@ export function convertNotionPageToInspiration(page: PageObjectResponse) {
   // 提取作者
   const authorProperty = properties.Author;
   const author = authorProperty?.type === 'rich_text'
-    ? authorProperty.rich_text.map(t => t.plain_text).join('')
+    ? authorProperty.rich_text.map((t: any) => t.plain_text).join('')
     : '';
 
   // 提取Prompt
   const promptProperty = properties.Prompt;
   const prompt = promptProperty?.type === 'rich_text'
-    ? promptProperty.rich_text.map(t => t.plain_text).join('')
+    ? promptProperty.rich_text.map((t: any) => t.plain_text).join('')
     : '';
 
   // 提取分类
   const categoryProperty = properties.Category;
-  const category = categoryProperty?.type === 'select' 
-    ? categoryProperty.select?.name 
+  const category = categoryProperty?.type === 'select'
+    ? categoryProperty.select?.name
     : '';
 
   // 提取标签
   const tagsProperty = properties.Tags;
   const tags = tagsProperty?.type === 'multi_select'
-    ? tagsProperty.multi_select.map(tag => tag.name)
+    ? tagsProperty.multi_select.map((tag: any) => tag.name)
     : [];
 
   return {
@@ -95,12 +97,12 @@ export function convertNotionPageToInspiration(page: PageObjectResponse) {
 export async function syncNotionDatabaseToLocal(databaseId: string) {
   try {
     const pages = await getDatabaseItems(databaseId);
-    
+
     // 这里应该实现将Notion数据同步到本地数据库的逻辑
     // 由于这是一个示例，我们只返回转换后的数据
-    
+
     const inspirations = pages.map(page => convertNotionPageToInspiration(page as PageObjectResponse));
-    
+
     return inspirations;
   } catch (error) {
     console.error('同步Notion数据库失败:', error);
