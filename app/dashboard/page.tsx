@@ -5,7 +5,7 @@ import { prisma } from '@/lib/db';
 import Header from '@/components/Header';
 import Link from 'next/link';
 import NotionSyncButton from '@/components/NotionSyncButton';
-import { FiPlus, FiGrid, FiTag, FiFolder, FiSettings, FiRefreshCw } from 'react-icons/fi';
+import { FiPlus, FiGrid, FiTag, FiFolder, FiSettings, FiRefreshCw, FiHeart } from 'react-icons/fi';
 
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
