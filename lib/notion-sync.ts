@@ -85,7 +85,7 @@ export async function syncNotionDatabaseToLocal(databaseId: string) {
       }
 
       // 检查是否已存在相同的灵感（通过Notion ID）
-      const existingInspiration = await prisma.inspiration.findUnique({
+      const existingInspiration = await prisma.inspiration.findFirst({
         where: { notionId: page.id },
       });
 
