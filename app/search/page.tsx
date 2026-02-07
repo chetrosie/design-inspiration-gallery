@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { prisma } from '@/lib/db';
 import Header from '@/components/Header';
 import InspirationGrid from '@/components/InspirationGrid';
