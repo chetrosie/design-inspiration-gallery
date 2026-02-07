@@ -68,7 +68,7 @@ export async function syncNotionDatabaseToLocal(databaseId: string) {
       if (categoryProperty?.type === 'select' && categoryProperty.select) {
         // 查找或创建分类
         const categoryName = categoryProperty.select.name;
-        let category = await prisma.category.findUnique({
+        let category = await prisma.category.findFirst({
           where: { name: categoryName },
         });
 
