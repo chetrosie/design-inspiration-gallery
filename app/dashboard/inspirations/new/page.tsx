@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Header from '@/components/Header';
+import ImageWithFallback from '@/components/ImageWithFallback';
 import { FiArrowLeft, FiSave } from 'react-icons/fi';
 
 export default function NewInspirationPage() {
@@ -125,9 +126,11 @@ export default function NewInspirationPage() {
                   />
                   {formData.imageUrl && (
                     <div className="mt-2">
-                      <img 
+                      <ImageWithFallback 
                         src={formData.imageUrl} 
                         alt="预览" 
+                        width={128}
+                        height={128}
                         className="h-32 w-32 object-cover rounded-md"
                       />
                     </div>

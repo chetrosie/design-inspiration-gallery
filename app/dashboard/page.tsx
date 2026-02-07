@@ -3,6 +3,7 @@ import { authOptions } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/db';
 import Header from '@/components/Header';
+import ImageWithFallback from '@/components/ImageWithFallback';
 import Link from 'next/link';
 import NotionSyncButton from '@/components/NotionSyncButton';
 import { FiPlus, FiGrid, FiTag, FiFolder, FiSettings, FiRefreshCw, FiHeart } from 'react-icons/fi';
@@ -190,9 +191,11 @@ export default async function DashboardPage() {
                         <div className="flex items-center">
                           <div className="flex-shrink-0">
                             <div className="h-10 w-10 rounded-md bg-gray-200 overflow-hidden">
-                              <img 
+                              <ImageWithFallback 
                                 src={inspiration.imageUrl} 
                                 alt={inspiration.title} 
+                                width={40}
+                                height={40}
                                 className="h-full w-full object-cover"
                               />
                             </div>

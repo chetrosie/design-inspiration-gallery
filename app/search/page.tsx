@@ -37,7 +37,7 @@ export default async function SearchPage({ searchParams }: { searchParams: { q?:
             <h1 className="text-3xl font-bold text-gray-900">搜索结果</h1>
             <div className="mt-2 flex items-center text-gray-600">
               <FiSearch className="mr-2" />
-              <span>关键词: "{query}"</span>
+              <span>关键词: &quot;{query}&quot;</span>
               <span className="mx-2">•</span>
               <span>{inspirations.length} 个结果</span>
             </div>
@@ -50,7 +50,7 @@ export default async function SearchPage({ searchParams }: { searchParams: { q?:
               <FiSearch className="mx-auto h-12 w-12 text-gray-400" />
               <h3 className="mt-2 text-sm font-medium text-gray-900">未找到相关内容</h3>
               <p className="mt-1 text-sm text-gray-500">
-                没有找到与 "{query}" 相关的灵感
+                没有找到与 &quot;{query}&quot; 相关的灵感
               </p>
             </div>
           )}

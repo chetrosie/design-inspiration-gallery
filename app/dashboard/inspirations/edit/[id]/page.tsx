@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Header from '@/components/Header';
+import ImageWithFallback from '@/components/ImageWithFallback';
 import { FiArrowLeft, FiSave } from 'react-icons/fi';
 
 interface Inspiration {
@@ -41,9 +42,9 @@ export default function EditInspirationPage() {
     if (params.id) {
       fetchInspiration();
     }
-  }, [params.id]);
+  }, [params.id, fetchInspiration]);
 
-  const fetchInspiration = async () => {
+  const fetchInspiration = useCallback(async () => {
     try {
       const res = await fetch(`/api/inspirations/${params.id}`);
       const data = await res.json();
@@ -67,7 +68,7 @@ export default function EditInspirationPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [params.id]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -203,9 +204,11 @@ export default function EditInspirationPage() {
                   />
                   {formData.imageUrl && (
                     <div className="mt-2">
-                      <img 
+                      <ImageWithFallback 
                         src={formData.imageUrl} 
                         alt="预览" 
+                        width={128}
+                        height={128}
                         className="h-32 w-32 object-cover rounded-md"
                       />
                     </div>

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Header from '@/components/Header';
+import ImageWithFallback from '@/components/ImageWithFallback';
 import { FiPlus, FiEdit, FiTrash2, FiArrowLeft, FiImage } from 'react-icons/fi';
 
 interface Inspiration {
@@ -116,9 +117,11 @@ export default function InspirationsDashboard() {
                       <div className="flex items-center">
                         <div className="flex-shrink-0 h-16 w-16 rounded-md overflow-hidden bg-gray-200">
                           {inspiration.imageUrl ? (
-                            <img 
+                            <ImageWithFallback 
                               src={inspiration.imageUrl} 
                               alt={inspiration.title} 
+                              width={64}
+                              height={64}
                               className="h-full w-full object-cover"
                             />
                           ) : (

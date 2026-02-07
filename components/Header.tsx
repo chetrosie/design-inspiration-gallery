@@ -2,6 +2,7 @@
 
 import { useSession, signIn, signOut } from 'next-auth/react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState } from 'react';
 import { FiMenu, FiX, FiUser, FiLogIn, FiLogOut, FiPlus, FiHome } from 'react-icons/fi';
 
@@ -44,9 +45,11 @@ export default function Header() {
                 </button>
                 <div className="flex items-center">
                   {session.user?.image ? (
-                    <img 
+                    <Image 
                       src={session.user.image} 
                       alt={session.user.name || 'User avatar'} 
+                      width={32}
+                      height={32}
                       className="h-8 w-8 rounded-full"
                     />
                   ) : (
